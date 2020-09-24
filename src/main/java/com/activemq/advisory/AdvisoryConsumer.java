@@ -2,15 +2,12 @@ package com.activemq.advisory;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQMessage;
-import org.apache.activemq.command.DataStructure;
 import org.apache.commons.cli.*;
 
 import javax.jms.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class AdvisoryConsumer implements MessageListener {
 
@@ -63,9 +60,10 @@ public class AdvisoryConsumer implements MessageListener {
                 }
 
                 System.out.println(dest);
-                System.out.println("\t producerId: " + mqMessage.getProducerId());
+                System.out.println("\tproducerId: " + mqMessage.getProducerId());
 
                 if (verbose) {
+                    /*
                     DataStructure data = mqMessage.getDataStructure();
                     if (data != null) {
                         System.out.println("\t dataStruct: " + data);
@@ -75,11 +73,12 @@ public class AdvisoryConsumer implements MessageListener {
                     if (props != null) {
                         System.out.println("\t properties: " + props);
                     }
+                    */
+                    System.out.println("\t" + message);
                 }
 
-                // System.out.println("\t" + message);
                 System.out.println();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
