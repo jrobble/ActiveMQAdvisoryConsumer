@@ -38,5 +38,5 @@ usage: ActiveMQAdvisoryConsumer
 By default, the tool subscribes to advisory topics for all queues. To subscribe to topics for specific queues use `-q`:
 
 ```
-java -jar target/mpf-activemq-advisory-consumer-0.0.1-jar-with-dependencies.jar -q MPF.DECTION_FACECV_REQUEST -q MPF.DETECTION_SUBSENSE_REQUEST
+java -jar target/mpf-activemq-advisory-consumer-0.0.1-jar-with-dependencies.jar -q MPF.DETECTION_FACECV_REQUEST -q MPF.DETECTION_SUBSENSE_REQUEST
 ```
