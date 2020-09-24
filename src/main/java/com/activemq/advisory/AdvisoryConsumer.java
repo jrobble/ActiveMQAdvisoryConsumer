@@ -5,6 +5,8 @@ import org.apache.activemq.command.ActiveMQMessage;
 import org.apache.commons.cli.*;
 
 import javax.jms.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.List;
 public class AdvisoryConsumer implements MessageListener {
 
     private static final String DEFAULT_BROKER_URI = "tcp://localhost:61616";
+
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss,SSS");
 
     private String brokerUri;
     private List<String> queues;
@@ -59,6 +63,7 @@ public class AdvisoryConsumer implements MessageListener {
                     }
                 }
 
+                System.out.println(dateTimeFormatter.format(LocalDateTime.now()));
                 System.out.println(dest);
                 System.out.println("\tproducerId: " + mqMessage.getProducerId());
 
