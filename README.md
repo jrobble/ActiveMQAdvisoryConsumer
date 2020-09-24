@@ -25,3 +25,18 @@ cd <path>/ActiveMQAdvisoryConsumer
 mvn install
 java -jar target/mpf-activemq-advisory-consumer-0.0.1-jar-with-dependencies.jar
 ```
+
+# Usage
+
+```
+usage: ActiveMQAdvisoryConsumer
+ -b,--broker <arg>   ActiveMQ broker URI. Default: tcp://localhost:61616
+ -q,--queue <arg>    queue to monitor
+ -v,--verbose        be verbose
+```
+
+By default, the tool subscribes to all topics. To subscribe to topics for specific queues use `-q`:
+
+```
+java -jar target/mpf-activemq-advisory-consumer-0.0.1-jar-with-dependencies.jar -q MPF.DECTION_FACECV_REQUEST -q MPF.DETECTION_SUBSENSE_REQUEST
+```
