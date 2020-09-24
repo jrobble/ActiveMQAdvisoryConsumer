@@ -7,7 +7,6 @@ import org.apache.activemq.command.DataStructure;
 import javax.jms.*;
 import java.io.IOException;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class AdvisoryConsumer implements MessageListener {
 
@@ -24,12 +23,15 @@ public class AdvisoryConsumer implements MessageListener {
         connection = connectionFactory.createConnection();
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
+        // http://activemq.apache.org/advisory-message.html
+
         /*
-        monitored = session.createQueue("JCG_QUEUE");
+        monitored = session.createQueue("MPF.DETECTION_PP5_REQUEST");
         destination = session.createTopic(
                 AdvisorySupport.getConsumerAdvisoryTopic(monitored).getPhysicalName() + "," +
                 AdvisorySupport.getProducerAdvisoryTopic(monitored).getPhysicalName());
         */
+
         destination = session.createTopic(">"); // DEBUG
 
         advisoryConsumer = session.createConsumer(destination);
@@ -83,7 +85,7 @@ public class AdvisoryConsumer implements MessageListener {
     }
 
     public void run() throws Exception {
-        TimeUnit.MINUTES.sleep(10);
+        Thread.sleep(Long.MAX_VALUE);
     }
 
     public static void main(String[] args) {
