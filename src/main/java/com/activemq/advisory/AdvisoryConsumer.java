@@ -16,23 +16,13 @@ public class AdvisoryConsumer implements MessageListener {
     private Session session;
     private Destination destination;
     private MessageConsumer advisoryConsumer;
-    private Destination monitored;
 
     public void before() throws Exception {
         connectionFactory = new ActiveMQConnectionFactory(connectionUri);
         connection = connectionFactory.createConnection();
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-        // http://activemq.apache.org/advisory-message.html
-
-        /*
-        monitored = session.createQueue("MPF.DETECTION_PP5_REQUEST");
-        destination = session.createTopic(
-                AdvisorySupport.getConsumerAdvisoryTopic(monitored).getPhysicalName() + "," +
-                AdvisorySupport.getProducerAdvisoryTopic(monitored).getPhysicalName());
-        */
-
-        destination = session.createTopic(">"); // DEBUG
+        destination = session.createTopic(">"); // subscribe to all topics
 
         advisoryConsumer = session.createConsumer(destination);
         advisoryConsumer.setMessageListener(this);
@@ -46,20 +36,6 @@ public class AdvisoryConsumer implements MessageListener {
     }
 
     public void onMessage(Message message) {
-        /*
-        try {
-            Destination source = message.getJMSDestination();
-            if (source.equals(AdvisorySupport.getConsumerAdvisoryTopic(monitored))) {
-                int consumerCount = message.getIntProperty("consumerCount");
-                System.out.println("New Consumer Advisory, Consumer Count: " + consumerCount);
-            } else if (source.equals(AdvisorySupport.getProducerAdvisoryTopic(monitored))) {
-                int producerCount = message.getIntProperty("producerCount");
-                System.out.println("New Producer Advisory, Producer Count: " + producerCount);
-            }
-        } catch (JMSException e) {
-        }
-        */
-
         if (message instanceof ActiveMQMessage) {
             try {
                 ActiveMQMessage mqMessage = (ActiveMQMessage) message;
@@ -90,7 +66,7 @@ public class AdvisoryConsumer implements MessageListener {
 
     public static void main(String[] args) {
         AdvisoryConsumer example = new AdvisoryConsumer();
-        System.out.println("Starting Advisory Consumer example now...");
+        System.out.println("Starting Advisory Consumer example now...\n");
         try {
             example.before();
             example.run();
